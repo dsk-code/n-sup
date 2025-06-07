@@ -45,6 +45,7 @@ pub fn Home() -> impl IntoView {
                     <Button />
                     <Button increment=5 />
                 </div>
+                <p class="text-red-800">"test"</p>
 
             </div>
         </ErrorBoundary>
