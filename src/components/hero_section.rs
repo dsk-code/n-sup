@@ -1,5 +1,5 @@
 use leptos::prelude::*;
-use crate::components::ui::*;
+use crate::components::ui::{Container, PrimaryButton, SecondaryButton};
 
 #[component]
 pub fn HeroSection() -> impl IntoView {

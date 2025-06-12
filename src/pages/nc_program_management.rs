@@ -73,6 +73,21 @@ pub fn NcProgramManagement() -> impl IntoView {
             file_size: "12.4KB".to_string(),
             description: "鉄鋼プレート用の多穴加工プログラム".to_string(),
         },
+        NcProgram {
+            id: 4,
+            name: "旧版ギア加工".to_string(),
+            program_number: "O9999".to_string(),
+            version: "v1.0".to_string(),
+            machine_type: "マシニングセンタ".to_string(),
+            material: "SS400".to_string(),
+            operation: "ギア加工".to_string(),
+            created_by: "旧システム".to_string(),
+            created_date: "2020-01-01".to_string(),
+            last_modified: "2020-01-01".to_string(),
+            status: ProgramStatus::Deprecated,
+            file_size: "5.2KB".to_string(),
+            description: "廃止予定の旧版ギア加工プログラム".to_string(),
+        },
     ]);
 
     let (show_add_modal, set_show_add_modal) = signal(false);

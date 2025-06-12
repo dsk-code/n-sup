@@ -13,4 +13,3 @@ pub use features::FeaturesSection;
 pub use benefits::BenefitsSection;
 pub use cta_section::CtaSection;
 pub use footer::Footer;
-pub use ui::*;
