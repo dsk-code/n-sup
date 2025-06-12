@@ -11,6 +11,7 @@ mod utils;
 use crate::pages::home::Home;
 use crate::pages::not_found::NotFound;
 use crate::pages::nc_program_management::NcProgramManagement;
+use crate::pages::chat::Chat;
 
 /// An app router which renders the homepage and handles 404's
 #[component]
@@ -32,6 +33,7 @@ pub fn App() -> impl IntoView {
             <Routes fallback=|| view! { <NotFound /> }>
                 <Route path=path!("/") view=Home />
                 <Route path=path!("/nc-programs") view=NcProgramManagement />
+                <Route path=path!("/chat") view=Chat />
             </Routes>
         </Router>
     }

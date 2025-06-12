@@ -71,6 +71,7 @@ pub fn FeatureCard(feature: Feature) -> impl IntoView {
         "工具管理" => Some("/tools"),
         "従業員別管理" => Some("/employees"),
         "NCプログラム管理" => Some("/nc-programs"),
+        "チャット機能" => Some("/chat"),
         _ => None,
     };
 
