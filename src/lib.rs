@@ -10,8 +10,7 @@ mod utils;
 // Top-Level pages
 use crate::pages::home::Home;
 use crate::pages::not_found::NotFound;
-use crate::pages::tool_management::ToolManagement;
-use crate::pages::employee_management::EmployeeManagement;
+use crate::pages::nc_program_management::NcProgramManagement;
 
 /// An app router which renders the homepage and handles 404's
 #[component]
@@ -32,8 +31,7 @@ pub fn App() -> impl IntoView {
         <Router>
             <Routes fallback=|| view! { <NotFound /> }>
                 <Route path=path!("/") view=Home />
-                <Route path=path!("/tools") view=ToolManagement />
-                <Route path=path!("/employees") view=EmployeeManagement />
+                <Route path=path!("/nc-programs") view=NcProgramManagement />
             </Routes>
         </Router>
     }
