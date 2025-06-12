@@ -70,6 +70,7 @@ pub fn FeatureCard(feature: Feature) -> impl IntoView {
     let link_url = match feature.title {
         "工具管理" => Some("/tools"),
         "従業員別管理" => Some("/employees"),
+        "NCプログラム管理" => Some("/nc-programs"),
         _ => None,
     };
 
@@ -86,7 +87,7 @@ pub fn FeatureCard(feature: Feature) -> impl IntoView {
             {
                 if let Some(url) = link_url {
                     view! {
-                        <a href={url} class="feature-card-link">
+                        <a href={url} class="feature-card-link block h-full hover:transform hover:scale-105 transition-all duration-300">
                             {card_content}
                         </a>
                     }.into_any()
