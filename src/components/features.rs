@@ -1,5 +1,5 @@
 use leptos::prelude::*;
-use crate::components::ui::*;
+use crate::components::ui::{Container, SectionHeader, AnimatedCard};
 
 #[derive(Clone)]
 pub struct Feature {
