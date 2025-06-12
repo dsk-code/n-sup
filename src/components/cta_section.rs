@@ -19,11 +19,11 @@ pub fn CtaSection() -> impl IntoView {
                             <br /> "導入サポートも充実しています。"
                         </p>
                         <div class="cta-buttons">
-                            <a href="#" class="primary-button">
-                                "無料トライアル開始"
+                            <a href="/tools" class="primary-button">
+                                "工具管理"
                             </a>
-                            <a href="#" class="secondary-button">
-                                "資料請求"
+                            <a href="/employees" class="secondary-button">
+                                "従業員管理"
                             </a>
                         </div>
                         <div class="cta-features">
