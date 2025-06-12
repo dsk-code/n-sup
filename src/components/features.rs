@@ -67,13 +67,33 @@ pub fn FeaturesSection() -> impl IntoView {
 
 #[component]
 pub fn FeatureCard(feature: Feature) -> impl IntoView {
+    let link_url = match feature.title {
+        "工具管理" => Some("/tools"),
+        "従業員別管理" => Some("/employees"),
+        _ => None,
+    };
+
+    let card_content = view! {
+        <div class="feature-card-content">
+            <span class="feature-icon">{feature.icon}</span>
+            <h3>{feature.title}</h3>
+            <p>{feature.description}</p>
+        </div>
+    };
+
     view! {
         <AnimatedCard class="feature-card" animation_class="fade-in">
-            <div class="feature-card-content">
-                <span class="feature-icon">{feature.icon}</span>
-                <h3>{feature.title}</h3>
-                <p>{feature.description}</p>
-            </div>
+            {
+                if let Some(url) = link_url {
+                    view! {
+                        <a href={url} class="feature-card-link">
+                            {card_content}
+                        </a>
+                    }.into_any()
+                } else {
+                    card_content.into_any()
+                }
+            }
         </AnimatedCard>
     }
 }
