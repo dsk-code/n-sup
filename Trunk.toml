@@ -36,10 +36,7 @@ ignore = [
     "node_modules",
     ".git",
     ".vscode",
-    ".claude",
-    "*.log",
-    "*.tmp",
-    ".DS_Store"
+    ".claude"
 ]
 
 [serve]
