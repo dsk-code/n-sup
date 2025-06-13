@@ -15,6 +15,7 @@ use crate::pages::chat::Chat;
 use crate::pages::tool_management::ToolManagement;
 use crate::pages::employee_management::EmployeeManagement;
 use crate::pages::ai_tool_suggestions::AiToolSuggestions;
+use crate::pages::nc_program_support::NcProgramSupport;
 
 /// An app router which renders the homepage and handles 404's
 #[component]
@@ -40,6 +41,7 @@ pub fn App() -> impl IntoView {
                 <Route path=path!("/nc-programs") view=NcProgramManagement />
                 <Route path=path!("/chat") view=Chat />
                 <Route path=path!("/ai-suggestions") view=AiToolSuggestions />
+                <Route path=path!("/nc-support") view=NcProgramSupport />
             </Routes>
         </Router>
     }

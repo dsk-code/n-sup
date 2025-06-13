@@ -73,6 +73,7 @@ pub fn FeatureCard(feature: Feature) -> impl IntoView {
         "NCプログラム管理" => Some("/nc-programs"),
         "チャット機能" => Some("/chat"),
         "AI工具提案" => Some("/ai-suggestions"),
+        "NCプログラム支援" => Some("/nc-support"),
         _ => None,
     };
 
