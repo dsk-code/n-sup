@@ -48,7 +48,7 @@ jobs:
       run: npm run build-css-prod
       
     - name: Build with Trunk
-      run: trunk build --release --public-url /n-sup/
+      run: trunk build --release
       
     - name: Setup Pages
       if: github.ref == 'refs/heads/main'
