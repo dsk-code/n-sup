@@ -36,14 +36,14 @@ pub fn App() -> impl IntoView {
 
         <Router>
             <Routes fallback=|| view! { <NotFound /> }>
-                <Route path=path!("/") view=Home />
-                <Route path=path!("/dashboard") view=Dashboard />
-                <Route path=path!("/tools") view=ToolManagement />
-                <Route path=path!("/employees") view=EmployeeManagement />
-                <Route path=path!("/nc-programs") view=NcProgramManagement />
-                <Route path=path!("/chat") view=Chat />
-                <Route path=path!("/ai-suggestions") view=AiToolSuggestions />
-                <Route path=path!("/nc-support") view=NcProgramSupport />
+                <Route path=path!("/n-sup/") view=Home />
+                <Route path=path!("/n-sup/dashboard") view=Dashboard />
+                <Route path=path!("/n-sup/tools") view=ToolManagement />
+                <Route path=path!("/n-sup/employees") view=EmployeeManagement />
+                <Route path=path!("/n-sup/nc-programs") view=NcProgramManagement />
+                <Route path=path!("/n-sup/chat") view=Chat />
+                <Route path=path!("/n-sup/ai-suggestions") view=AiToolSuggestions />
+                <Route path=path!("/n-sup/nc-support") view=NcProgramSupport />
             </Routes>
         </Router>
     }

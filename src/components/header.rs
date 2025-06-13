@@ -28,7 +28,7 @@ pub fn Header() -> impl IntoView {
                 <nav class="nav">
                     <a href="#features">"機能"</a>
                     <a href="#benefits">"メリット"</a>
-                    <A href="/dashboard" attr:class="header-cta">
+                    <A href="/n-sup/dashboard" attr:class="header-cta">
                         "ダッシュボード"
                     </A>
                 </nav>

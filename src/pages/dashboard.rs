@@ -182,42 +182,42 @@ pub fn Dashboard() -> impl IntoView {
                         <NavigationCard 
                             title="工具管理"
                             description="工具の在庫管理とメンテナンス"
-                            href="/tools"
+                            href="/n-sup/tools"
                             icon="🔧"
                             color="blue"
                         />
                         <NavigationCard 
                             title="従業員管理"
                             description="従業員情報と勤務状況"
-                            href="/employees"
+                            href="/n-sup/employees"
                             icon="👥"
                             color="purple"
                         />
                         <NavigationCard 
                             title="NCプログラム"
                             description="プログラム管理とバージョン管理"
-                            href="/nc-programs"
+                            href="/n-sup/nc-programs"
                             icon="⚙️"
                             color="cyan"
                         />
                         <NavigationCard 
                             title="AI支援"
                             description="AI最適化とプログラム生成"
-                            href="/nc-support"
+                            href="/n-sup/nc-support"
                             icon="🤖"
                             color="green"
                         />
                         <NavigationCard 
                             title="AI工具提案"
                             description="機械学習による改善提案"
-                            href="/ai-suggestions"
+                            href="/n-sup/ai-suggestions"
                             icon="💡"
                             color="yellow"
                         />
                         <NavigationCard 
                             title="チャット"
                             description="チーム内コミュニケーション"
-                            href="/chat"
+                            href="/n-sup/chat"
                             icon="💬"
                             color="orange"
                         />
@@ -264,16 +264,16 @@ fn QuickActions() -> impl IntoView {
         <div class="bg-slate-800/50 backdrop-blur-lg rounded-xl p-6 border border-slate-700">
             <h3 class="text-lg font-semibold text-white mb-4">"クイックアクション"</h3>
             <div class="space-y-3">
-                <A href="/tools" attr:class="block w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 text-center font-medium">
+                <A href="/n-sup/tools" attr:class="block w-full bg-gradient-to-r from-blue-500 to-blue-600 text-white py-3 px-4 rounded-lg hover:from-blue-600 hover:to-blue-700 transition-all duration-300 text-center font-medium">
                     "新しい工具を追加"
                 </A>
-                <A href="/employees" attr:class="block w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all duration-300 text-center font-medium">
+                <A href="/n-sup/employees" attr:class="block w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white py-3 px-4 rounded-lg hover:from-purple-600 hover:to-purple-700 transition-all duration-300 text-center font-medium">
                     "従業員を登録"
                 </A>
-                <A href="/nc-programs" attr:class="block w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-white py-3 px-4 rounded-lg hover:from-cyan-600 hover:to-cyan-700 transition-all duration-300 text-center font-medium">
+                <A href="/n-sup/nc-programs" attr:class="block w-full bg-gradient-to-r from-cyan-500 to-cyan-600 text-white py-3 px-4 rounded-lg hover:from-cyan-600 hover:to-cyan-700 transition-all duration-300 text-center font-medium">
                     "NCプログラム作成"
                 </A>
-                <A href="/chat" attr:class="block w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-4 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 text-center font-medium">
+                <A href="/n-sup/chat" attr:class="block w-full bg-gradient-to-r from-orange-500 to-orange-600 text-white py-3 px-4 rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all duration-300 text-center font-medium">
                     "チーム会議を開始"
                 </A>
             </div>
@@ -301,7 +301,7 @@ fn RecentActivitiesCard(activities: Vec<RecentActivity>) -> impl IntoView {
                     }
                 }).collect::<Vec<_>>()}
             </div>
-            <A href="/activities" attr:class="block text-center text-sm text-blue-400 hover:text-blue-300 mt-4">
+            <A href="/n-sup/activities" attr:class="block text-center text-sm text-blue-400 hover:text-blue-300 mt-4">
                 "すべてのアクティビティを表示"
             </A>
         </div>
