@@ -28,6 +28,9 @@ pub fn CtaSection() -> impl IntoView {
                             <a href="/nc-programs" class="w-full sm:w-auto secondary-button text-center px-6 py-3 rounded-lg font-semibold border-2 border-purple-500 text-purple-400 hover:bg-purple-500 hover:text-white transition-all duration-300">
                                 "NCプログラム管理"
                             </a>
+                            <a href="/nc-support" class="w-full sm:w-auto secondary-button text-center px-6 py-3 rounded-lg font-semibold border-2 border-cyan-500 text-cyan-400 hover:bg-cyan-500 hover:text-white transition-all duration-300">
+                                "NCプログラム支援"
+                            </a>
                             <a href="/chat" class="w-full sm:w-auto secondary-button text-center px-6 py-3 rounded-lg font-semibold border-2 border-green-500 text-green-400 hover:bg-green-500 hover:text-white transition-all duration-300">
                                 "チャット"
                             </a>
