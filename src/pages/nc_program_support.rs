@@ -51,7 +51,7 @@ pub struct CodeTemplate {
 
 #[component]
 pub fn NcProgramSupport() -> impl IntoView {
-    let (optimizations, set_optimizations) = signal(vec![
+    let (optimizations, _set_optimizations) = signal(vec![
         NcOptimization {
             id: 1,
             program_name: "アルミブラケット加工 O1001".to_string(),
@@ -94,9 +94,51 @@ pub fn NcProgramSupport() -> impl IntoView {
             created_date: "2024-06-10".to_string(),
             status: OptimizationStatus::Verified,
         },
+        NcOptimization {
+            id: 4,
+            program_name: "表面品質改善 O4001".to_string(),
+            original_code: "G01 F150 X30.0\nG01 F120 Y30.0".to_string(),
+            optimized_code: "G01 F180 X30.0\nG01 F160 Y30.0".to_string(),
+            optimization_type: OptimizationType::SurfaceQualityImprovement,
+            improvement_percentage: 20.0,
+            execution_time_reduction: "30秒短縮".to_string(),
+            tool_life_improvement: "12%向上".to_string(),
+            surface_quality_improvement: "Ra値15%改善".to_string(),
+            suggested_by: "AIシステム".to_string(),
+            created_date: "2024-06-09".to_string(),
+            status: OptimizationStatus::New,
+        },
+        NcOptimization {
+            id: 5,
+            program_name: "切削液最適化 O5001".to_string(),
+            original_code: "M08\nG01 F100 X25.0\nM09".to_string(),
+            optimized_code: "M08\nG04 P0.5\nG01 F120 X25.0\nG04 P0.2\nM09".to_string(),
+            optimization_type: OptimizationType::CoolantOptimization,
+            improvement_percentage: 15.0,
+            execution_time_reduction: "20秒短縮".to_string(),
+            tool_life_improvement: "30%向上".to_string(),
+            surface_quality_improvement: "切削熱減少".to_string(),
+            suggested_by: "AIシステム".to_string(),
+            created_date: "2024-06-08".to_string(),
+            status: OptimizationStatus::Applied,
+        },
+        NcOptimization {
+            id: 6,
+            program_name: "省電力加工 O6001".to_string(),
+            original_code: "S3000 M03\nG01 F200 X40.0".to_string(),
+            optimized_code: "S2500 M03\nG01 F180 X40.0".to_string(),
+            optimization_type: OptimizationType::PowerConsumptionReduction,
+            improvement_percentage: 12.0,
+            execution_time_reduction: "10秒短縮".to_string(),
+            tool_life_improvement: "8%向上".to_string(),
+            surface_quality_improvement: "振動減少".to_string(),
+            suggested_by: "AIシステム".to_string(),
+            created_date: "2024-06-07".to_string(),
+            status: OptimizationStatus::Testing,
+        },
     ]);
 
-    let (templates, set_templates) = signal(vec![
+    let (templates, _set_templates) = signal(vec![
         CodeTemplate {
             id: 1,
             name: "アルミ材フライス加工テンプレート".to_string(),

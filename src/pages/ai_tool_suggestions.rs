@@ -44,7 +44,7 @@ pub enum SuggestionStatus {
 
 #[component]
 pub fn AiToolSuggestions() -> impl IntoView {
-    let (suggestions, set_suggestions) = signal(vec![
+    let (suggestions, _set_suggestions) = signal(vec![
         AiSuggestion {
             id: 1,
             title: "工具摩耗予測システム".to_string(),
@@ -110,10 +110,23 @@ pub fn AiToolSuggestions() -> impl IntoView {
             status: SuggestionStatus::Implemented,
             tags: vec!["安全管理".to_string(), "監視システム".to_string(), "AI".to_string()],
         },
+        AiSuggestion {
+            id: 6,
+            title: "生産性向上プログラム".to_string(),
+            description: "作業フローの分析により生産性を向上させる包括的なプログラムです。".to_string(),
+            category: SuggestionCategory::ProductivityIncrease,
+            priority: Priority::Low,
+            estimated_impact: "生産性10%向上".to_string(),
+            implementation_effort: "6ヶ月".to_string(),
+            suggested_by: "AIシステム".to_string(),
+            created_date: "2024-05-30".to_string(),
+            status: SuggestionStatus::Rejected,
+            tags: vec!["生産性".to_string(), "フロー改善".to_string()],
+        },
     ]);
 
     let (selected_category, set_selected_category) = signal(None::<SuggestionCategory>);
-    let (selected_priority, set_selected_priority) = signal(None::<Priority>);
+    let (selected_priority, _set_selected_priority) = signal(None::<Priority>);
     let (show_detail_modal, set_show_detail_modal) = signal(false);
     let (viewing_suggestion, set_viewing_suggestion) = signal(None::<AiSuggestion>);
 
