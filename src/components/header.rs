@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use leptos_router::components::A;
 use wasm_bindgen::prelude::*;
 
 #[component]
@@ -27,9 +28,9 @@ pub fn Header() -> impl IntoView {
                 <nav class="nav">
                     <a href="#features">"機能"</a>
                     <a href="#benefits">"メリット"</a>
-                    <a href="#cta" class="header-cta">
-                        "無料で始める"
-                    </a>
+                    <A href="/dashboard" attr:class="header-cta">
+                        "ダッシュボード"
+                    </A>
                 </nav>
             </div>
         </header>
