@@ -10,6 +10,7 @@ mod utils;
 // Top-Level pages
 use crate::pages::home::Home;
 use crate::pages::not_found::NotFound;
+use crate::pages::dashboard::Dashboard;
 use crate::pages::nc_program_management::NcProgramManagement;
 use crate::pages::chat::Chat;
 use crate::pages::tool_management::ToolManagement;
@@ -36,6 +37,7 @@ pub fn App() -> impl IntoView {
         <Router>
             <Routes fallback=|| view! { <NotFound /> }>
                 <Route path=path!("/") view=Home />
+                <Route path=path!("/dashboard") view=Dashboard />
                 <Route path=path!("/tools") view=ToolManagement />
                 <Route path=path!("/employees") view=EmployeeManagement />
                 <Route path=path!("/nc-programs") view=NcProgramManagement />
