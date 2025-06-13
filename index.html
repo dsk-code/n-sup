@@ -20,15 +20,17 @@
 
   <!-- GitHub Pages SPA support -->
   <script type="text/javascript">
-    // GitHub Pages SPA hack for proper routing
+    // GitHub Pages SPA routing restoration
     (function(l) {
       if (l.search[1] === '/' ) {
+        // Extract the encoded path from ?/dashboard format
         var decoded = l.search.slice(1).split('&').map(function(s) { 
           return s.replace(/~and~/g, '&')
         }).join('?');
-        window.history.replaceState(null, null,
-            l.pathname.slice(0, -1) + decoded + l.hash
-        );
+        
+        // Restore the original path: /n-sup/?/dashboard -> /n-sup/dashboard
+        var newPath = l.pathname + decoded + l.hash;
+        window.history.replaceState(null, null, newPath);
       }
     }(window.location))
   </script>

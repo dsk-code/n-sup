@@ -2,21 +2,35 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>N-Sup</title>
+  <title>N-Sup - 製造効率プラットフォーム</title>
   <script type="text/javascript">
-    // GitHub Pages SPA hack to handle 404s
-    // https://github.com/rafgraph/spa-github-pages
-    var pathSegmentsToKeep = 1;
+    // GitHub Pages SPA routing hack
+    // Redirect /n-sup/dashboard to /n-sup/?/dashboard
+    var pathSegmentsToKeep = 1; // Keep '/n-sup'
     var l = window.location;
-    l.replace(
-      l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
-      l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
-      l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
-      (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-      l.hash
-    );
+    
+    // Split path and get segments
+    var pathSegments = l.pathname.split('/').filter(Boolean);
+    
+    if (pathSegments.length > 1 && pathSegments[0] === 'n-sup') {
+      // Redirect to index.html with encoded path
+      var redirectPath = pathSegments.slice(1).join('/').replace(/&/g, '~and~');
+      var newUrl = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+        '/n-sup/?/' + redirectPath +
+        (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
+        l.hash;
+      
+      l.replace(newUrl);
+    } else {
+      // Fallback to main page
+      l.replace(l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') + '/n-sup/');
+    }
   </script>
 </head>
 <body>
+  <div style="text-align: center; padding: 50px; font-family: sans-serif;">
+    <h1>リダイレクト中...</h1>
+    <p>N-Supプラットフォームに移動しています。</p>
+  </div>
 </body>
 </html>
