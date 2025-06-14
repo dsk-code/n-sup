@@ -124,18 +124,16 @@ pub fn Chat() -> impl IntoView {
     };
 
     let send_message_enter = move |ev: web_sys::KeyboardEvent| {
-        if ev.key() == "Enter" {
-            if !new_message.get().is_empty() {
-                let message = ChatMessage {
-                    id: messages.get().len() as u32 + 1,
-                    sender: "あなた".to_string(),
-                    message: new_message.get(),
-                    timestamp: "now".to_string(),
-                    message_type: MessageType::User,
-                };
-                set_messages.update(|msgs| msgs.push(message));
-                set_new_message.set(String::new());
-            }
+        if ev.key() == "Enter" && !new_message.get().is_empty() {
+            let message = ChatMessage {
+                id: messages.get().len() as u32 + 1,
+                sender: "あなた".to_string(),
+                message: new_message.get(),
+                timestamp: "now".to_string(),
+                message_type: MessageType::User,
+            };
+            set_messages.update(|msgs| msgs.push(message));
+            set_new_message.set(String::new());
         }
     };
 

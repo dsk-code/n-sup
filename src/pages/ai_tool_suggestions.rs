@@ -133,9 +133,9 @@ pub fn AiToolSuggestions() -> impl IntoView {
     let filtered_suggestions = move || {
         suggestions.get().into_iter().filter(|suggestion| {
             let category_match = selected_category.get()
-                .map_or(true, |cat| suggestion.category == cat);
+                .is_none_or(|cat| suggestion.category == cat);
             let priority_match = selected_priority.get()
-                .map_or(true, |pri| suggestion.priority == pri);
+                .is_none_or(|pri| suggestion.priority == pri);
             
             category_match && priority_match
         }).collect::<Vec<_>>()

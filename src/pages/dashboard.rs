@@ -32,7 +32,6 @@ pub struct AlertItem {
 pub enum AlertType {
     Warning,
     Info,
-    Error,
     Success,
 }
 
@@ -318,7 +317,6 @@ fn AlertsCard(alerts: Vec<AlertItem>) -> impl IntoView {
                     let (icon, color) = match alert.alert_type {
                         AlertType::Warning => ("⚠️", "text-yellow-400"),
                         AlertType::Info => ("ℹ️", "text-blue-400"),
-                        AlertType::Error => ("❌", "text-red-400"),
                         AlertType::Success => ("✅", "text-green-400"),
                     };
                     
