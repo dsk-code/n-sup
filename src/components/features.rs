@@ -68,12 +68,12 @@ pub fn FeaturesSection() -> impl IntoView {
 #[component]
 pub fn FeatureCard(feature: Feature) -> impl IntoView {
     let link_url = match feature.title {
-        "工具管理" => Some("/tools"),
-        "従業員別管理" => Some("/employees"),
-        "NCプログラム管理" => Some("/nc-programs"),
-        "チャット機能" => Some("/chat"),
-        "AI工具提案" => Some("/ai-suggestions"),
-        "NCプログラム支援" => Some("/nc-support"),
+        "工具管理" => Some("/n-sup/tools"),
+        "従業員別管理" => Some("/n-sup/employees"),
+        "NCプログラム管理" => Some("/n-sup/nc-programs"),
+        "チャット機能" => Some("/n-sup/chat"),
+        "AI工具提案" => Some("/n-sup/ai-suggestions"),
+        "NCプログラム支援" => Some("/n-sup/nc-support"),
         _ => None,
     };
 
