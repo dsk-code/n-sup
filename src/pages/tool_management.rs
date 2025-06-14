@@ -109,7 +109,7 @@ pub fn ToolManagement() -> impl IntoView {
             <div class="container mx-auto px-4 py-8">
                 <div class="mb-6">
                     <a 
-                        href="/" 
+                        href="/n-sup/" 
                         class="inline-flex items-center text-slate-300 hover:text-white transition-colors duration-200"
                     >
                         <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
