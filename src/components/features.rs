@@ -1,4 +1,5 @@
 use leptos::prelude::*;
+use leptos_router::components::A;
 use crate::components::ui::{Container, SectionHeader, AnimatedCard};
 
 #[derive(Clone)]
@@ -90,9 +91,9 @@ pub fn FeatureCard(feature: Feature) -> impl IntoView {
             {
                 if let Some(url) = link_url {
                     view! {
-                        <a href={url} class="feature-card-link block h-full hover:transform hover:scale-105 transition-all duration-300">
+                        <A href=url attr:class="feature-card-link block h-full hover:transform hover:scale-105 transition-all duration-300">
                             {card_content}
-                        </a>
+                        </A>
                     }.into_any()
                 } else {
                     card_content.into_any()
