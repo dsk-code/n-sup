@@ -13,6 +13,11 @@ pub struct Feature {
 pub fn FeaturesSection() -> impl IntoView {
     let features = vec![
         Feature {
+            icon: "📊",
+            title: "ダッシュボード",
+            description: "リアルタイムデータとKPIを一目で確認。生産状況を即座に把握できます。",
+        },
+        Feature {
             icon: "🔧",
             title: "工具管理",
             description: "リアルタイムでの工具在庫管理と追跡。消耗品の自動アラート機能付き。",
@@ -28,12 +33,6 @@ pub fn FeaturesSection() -> impl IntoView {
             description: "バージョン管理機能付きのNCプログラム保管・共有システム。",
         },
         Feature {
-            icon: "💬",
-            title: "チャット機能",
-            description:
-                "チーム内のリアルタイムコミュニケーション。プロジェクト単位でのやり取りが可能。",
-        },
-        Feature {
             icon: "🤖",
             title: "AI工具提案",
             description: "機械学習による最適な工具の提案と推奨。コスト削減と効率向上。",
@@ -42,6 +41,11 @@ pub fn FeaturesSection() -> impl IntoView {
             icon: "🛠️",
             title: "NCプログラム支援",
             description: "AIによるNCプログラムの最適化提案と自動コード生成支援。",
+        },
+        Feature {
+            icon: "💬",
+            title: "チャット機能",
+            description: "チーム内のリアルタイムコミュニケーション。プロジェクト単位でのやり取りが可能。",
         },
     ];
 
@@ -69,6 +73,7 @@ pub fn FeaturesSection() -> impl IntoView {
 #[component]
 pub fn FeatureCard(feature: Feature) -> impl IntoView {
     let link_url = match feature.title {
+        "ダッシュボード" => Some("/n-sup/dashboard"),
         "工具管理" => Some("/n-sup/tools"),
         "従業員別管理" => Some("/n-sup/employees"),
         "NCプログラム管理" => Some("/n-sup/nc-programs"),

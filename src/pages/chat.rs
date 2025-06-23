@@ -7,6 +7,11 @@ pub struct ChatMessage {
     pub message: String,
     pub timestamp: String,
     pub message_type: MessageType,
+    pub priority: MessagePriority,
+    pub ai_sentiment: f32,
+    pub attachments: Vec<String>,
+    pub read_by: Vec<String>,
+    pub reactions: Vec<MessageReaction>,
 }
 
 #[derive(Clone, Debug, PartialEq)]
@@ -14,6 +19,25 @@ pub enum MessageType {
     User,
     System,
     Alert,
+    AIAssistant,
+    ExecutiveUpdate,
+    CriticalAlert,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum MessagePriority {
+    Low,
+    Normal,
+    High,
+    Critical,
+    Presidential,
+}
+
+#[derive(Clone, Debug)]
+pub struct MessageReaction {
+    pub emoji: String,
+    pub count: u32,
+    pub users: Vec<String>,
 }
 
 #[derive(Clone, Debug)]
@@ -23,6 +47,67 @@ pub struct ChatRoom {
     pub description: String,
     pub member_count: u32,
     pub is_active: bool,
+    pub room_type: RoomType,
+    pub ai_moderation: bool,
+    pub encryption_level: EncryptionLevel,
+    pub productivity_score: f32,
+    pub collaboration_metrics: CollaborationMetrics,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum RoomType {
+    General,
+    Executive,
+    ProjectTeam,
+    Emergency,
+    AIAnalysis,
+    ProductionFloor,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum EncryptionLevel {
+    Standard,
+    Enterprise,
+    Presidential,
+    QuantumSecure,
+}
+
+#[derive(Clone, Debug)]
+pub struct CollaborationMetrics {
+    pub messages_per_hour: f32,
+    pub response_rate: f32,
+    pub engagement_score: f32,
+    pub decision_velocity: f32,
+}
+
+#[derive(Clone, Debug)]
+pub struct AIInsight {
+    pub insight_type: InsightType,
+    pub title: String,
+    pub description: String,
+    pub impact_score: f32,
+    pub confidence: f32,
+    pub actionable: bool,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum InsightType {
+    CommunicationEfficiency,
+    TeamMorale,
+    ProductivityTrend,
+    DecisionBottleneck,
+    CollaborationGap,
+}
+
+#[derive(Clone, Debug)]
+pub struct ChatAnalytics {
+    pub total_messages: u32,
+    pub active_users: u32,
+    pub average_response_time: f32,
+    pub sentiment_score: f32,
+    pub productivity_index: f32,
+    pub collaboration_efficiency: f32,
+    pub ai_insights: Vec<AIInsight>,
 }
 
 #[component]
@@ -30,78 +115,202 @@ pub fn Chat() -> impl IntoView {
     let (messages, set_messages) = signal(vec![
         ChatMessage {
             id: 1,
-            sender: "田中太郎".to_string(),
-            message: "おはようございます！今日の工具の準備はいかがですか？".to_string(),
+            sender: "Presidential AI Assistant".to_string(),
+            message: "🚀 おはようございます！今日の製造効率は97.3%で推移中。工具最適化により34%のコスト削減を達成しています。".to_string(),
             timestamp: "09:30".to_string(),
-            message_type: MessageType::User,
+            message_type: MessageType::AIAssistant,
+            priority: MessagePriority::Presidential,
+            ai_sentiment: 0.95,
+            attachments: vec!["efficiency_report.pdf".to_string()],
+            read_by: vec!["田中太郎".to_string(), "佐藤花子".to_string()],
+            reactions: vec![MessageReaction { emoji: "💼".to_string(), count: 5, users: vec!["田中太郎".to_string()] }],
         },
         ChatMessage {
             id: 2,
-            sender: "佐藤花子".to_string(),
-            message: "おはようございます。A5052の加工用エンドミルの在庫が少なくなっています。".to_string(),
+            sender: "田中太郎".to_string(),
+            message: "素晴らしい結果ですね！A5052の加工でエンドミルの性能向上が顕著に現れています。".to_string(),
             timestamp: "09:32".to_string(),
             message_type: MessageType::User,
+            priority: MessagePriority::High,
+            ai_sentiment: 0.87,
+            attachments: vec![],
+            read_by: vec!["佐藤花子".to_string(), "山田次郎".to_string()],
+            reactions: vec![MessageReaction { emoji: "👍".to_string(), count: 3, users: vec!["佐藤花子".to_string()] }],
         },
         ChatMessage {
             id: 3,
-            sender: "システム".to_string(),
-            message: "工具「エンドミル φ10mm」のメンテナンス期限が近づいています。".to_string(),
+            sender: "Quantum Alert System".to_string(),
+            message: "⚡ 予知保全AI：工具「エンドミル φ10mm」の交換タイミングを97.8%の精度で予測。最適な交換時期は明日14:30です。".to_string(),
             timestamp: "09:35".to_string(),
-            message_type: MessageType::Alert,
+            message_type: MessageType::CriticalAlert,
+            priority: MessagePriority::Critical,
+            ai_sentiment: 0.65,
+            attachments: vec!["predictive_maintenance.json".to_string()],
+            read_by: vec!["田中太郎".to_string()],
+            reactions: vec![MessageReaction { emoji: "🔧".to_string(), count: 2, users: vec!["山田次郎".to_string()] }],
         },
         ChatMessage {
             id: 4,
             sender: "山田次郎".to_string(),
-            message: "NCプログラム「O1001」の最新版をアップロードしました。確認をお願いします。".to_string(),
+            message: "🎯 AIが最適化したNCプログラム「O1001 v3.0」をデプロイ完了。実行時間23%短縮、品質スコア99.1%を実現しました！".to_string(),
             timestamp: "09:40".to_string(),
             message_type: MessageType::User,
+            priority: MessagePriority::High,
+            ai_sentiment: 0.92,
+            attachments: vec!["nc_program_v3.nc".to_string(), "performance_metrics.xlsx".to_string()],
+            read_by: vec!["田中太郎".to_string(), "佐藤花子".to_string()],
+            reactions: vec![MessageReaction { emoji: "🚀".to_string(), count: 4, users: vec!["田中太郎".to_string(), "佐藤花子".to_string()] }],
         },
         ChatMessage {
             id: 5,
-            sender: "田中太郎".to_string(),
-            message: "承知しました。午後一で確認いたします。".to_string(),
+            sender: "佐藤花子".to_string(),
+            message: "💰 今月のコスト削減実績：4,200万円達成！目標を125%上回る驚異的な成果です。".to_string(),
             timestamp: "09:42".to_string(),
-            message_type: MessageType::User,
+            message_type: MessageType::ExecutiveUpdate,
+            priority: MessagePriority::Presidential,
+            ai_sentiment: 0.98,
+            attachments: vec!["cost_savings_report.pdf".to_string()],
+            read_by: vec!["田中太郎".to_string(), "山田次郎".to_string()],
+            reactions: vec![MessageReaction { emoji: "💎".to_string(), count: 6, users: vec!["田中太郎".to_string(), "山田次郎".to_string()] }],
         },
         ChatMessage {
             id: 6,
-            sender: "システム".to_string(),
-            message: "新しいユーザー「鈴木一郎」がチャットルームに参加しました。".to_string(),
+            sender: "Presidential Communication System".to_string(),
+            message: "🌟 新メンバー「鈴木一郎（量子AI専門家）」が参加。チームの集合知能指数が15.7%向上しました。".to_string(),
             timestamp: "10:00".to_string(),
             message_type: MessageType::System,
+            priority: MessagePriority::High,
+            ai_sentiment: 0.85,
+            attachments: vec!["team_intelligence_metrics.json".to_string()],
+            read_by: vec![],
+            reactions: vec![MessageReaction { emoji: "🎉".to_string(), count: 8, users: vec!["田中太郎".to_string(), "佐藤花子".to_string(), "山田次郎".to_string()] }],
         },
     ]);
 
     let (chat_rooms, set_chat_rooms) = signal(vec![
         ChatRoom {
             id: 1,
-            name: "製造部チーム".to_string(),
-            description: "製造部メンバーの連絡用".to_string(),
+            name: "🏆 Presidential Command Center".to_string(),
+            description: "最高経営陣による戦略的意思決定とリアルタイム業績監視".to_string(),
             member_count: 8,
             is_active: true,
+            room_type: RoomType::Executive,
+            ai_moderation: true,
+            encryption_level: EncryptionLevel::Presidential,
+            productivity_score: 97.3,
+            collaboration_metrics: CollaborationMetrics {
+                messages_per_hour: 15.2,
+                response_rate: 98.7,
+                engagement_score: 95.1,
+                decision_velocity: 87.4,
+            },
         },
         ChatRoom {
             id: 2,
-            name: "工具管理".to_string(),
-            description: "工具の在庫・メンテナンス情報共有".to_string(),
-            member_count: 5,
+            name: "🤖 AI Quantum Analytics Hub".to_string(),
+            description: "次世代AI分析と量子コンピューティングによる製造最適化".to_string(),
+            member_count: 12,
             is_active: true,
+            room_type: RoomType::AIAnalysis,
+            ai_moderation: true,
+            encryption_level: EncryptionLevel::QuantumSecure,
+            productivity_score: 99.8,
+            collaboration_metrics: CollaborationMetrics {
+                messages_per_hour: 24.7,
+                response_rate: 99.2,
+                engagement_score: 96.8,
+                decision_velocity: 92.3,
+            },
         },
         ChatRoom {
             id: 3,
-            name: "NCプログラム共有".to_string(),
-            description: "NCプログラムの更新・共有".to_string(),
-            member_count: 12,
-            is_active: false,
+            name: "⚡ Production Floor Intelligence".to_string(),
+            description: "製造現場のリアルタイム監視とAI予測分析".to_string(),
+            member_count: 18,
+            is_active: true,
+            room_type: RoomType::ProductionFloor,
+            ai_moderation: true,
+            encryption_level: EncryptionLevel::Enterprise,
+            productivity_score: 94.6,
+            collaboration_metrics: CollaborationMetrics {
+                messages_per_hour: 32.1,
+                response_rate: 95.8,
+                engagement_score: 91.2,
+                decision_velocity: 89.7,
+            },
         },
         ChatRoom {
             id: 4,
-            name: "全体連絡".to_string(),
-            description: "全社員向けアナウンス".to_string(),
+            name: "🚨 Emergency Response Center".to_string(),
+            description: "緊急事態対応と危機管理のための専用チャンネル".to_string(),
             member_count: 25,
             is_active: false,
+            room_type: RoomType::Emergency,
+            ai_moderation: true,
+            encryption_level: EncryptionLevel::Presidential,
+            productivity_score: 88.9,
+            collaboration_metrics: CollaborationMetrics {
+                messages_per_hour: 8.3,
+                response_rate: 99.9,
+                engagement_score: 97.5,
+                decision_velocity: 95.8,
+            },
+        },
+        ChatRoom {
+            id: 5,
+            name: "💎 Executive Innovation Lab".to_string(),
+            description: "次世代技術とイノベーション戦略の討議".to_string(),
+            member_count: 6,
+            is_active: true,
+            room_type: RoomType::Executive,
+            ai_moderation: true,
+            encryption_level: EncryptionLevel::Presidential,
+            productivity_score: 96.4,
+            collaboration_metrics: CollaborationMetrics {
+                messages_per_hour: 11.8,
+                response_rate: 97.3,
+                engagement_score: 94.7,
+                decision_velocity: 91.2,
+            },
         },
     ]);
+
+    let (analytics, _set_analytics) = signal(ChatAnalytics {
+        total_messages: 2847,
+        active_users: 47,
+        average_response_time: 2.3,
+        sentiment_score: 87.4,
+        productivity_index: 94.7,
+        collaboration_efficiency: 92.8,
+        ai_insights: vec![
+            AIInsight {
+                insight_type: InsightType::CommunicationEfficiency,
+                title: "コミュニケーション効率の最適化".to_string(),
+                description: "チーム間の情報共有速度が23%向上。AI支援により意思決定の迅速化を実現。".to_string(),
+                impact_score: 8.7,
+                confidence: 94.2,
+                actionable: true,
+            },
+            AIInsight {
+                insight_type: InsightType::TeamMorale,
+                title: "チームモラルの向上".to_string(),
+                description: "ポジティブな感情分析が85%を記録。プロジェクト成功率との強い相関を確認。".to_string(),
+                impact_score: 9.2,
+                confidence: 89.7,
+                actionable: true,
+            },
+            AIInsight {
+                insight_type: InsightType::ProductivityTrend,
+                title: "生産性向上トレンド".to_string(),
+                description: "過去30日間で生産性指標が15.3%上昇。AIアシスタントの活用効果が顕著。".to_string(),
+                impact_score: 9.8,
+                confidence: 96.1,
+                actionable: true,
+            },
+        ],
+    });
+
+    let (show_analytics, set_show_analytics) = signal(false);
 
     let (selected_room, set_selected_room) = signal(1u32);
     let (new_message, set_new_message) = signal(String::new());
@@ -117,6 +326,11 @@ pub fn Chat() -> impl IntoView {
                 message: new_message.get(),
                 timestamp: "now".to_string(),
                 message_type: MessageType::User,
+                priority: MessagePriority::Normal,
+                ai_sentiment: 0.75,
+                attachments: vec![],
+                read_by: vec![],
+                reactions: vec![],
             };
             set_messages.update(|msgs| msgs.push(message));
             set_new_message.set(String::new());
@@ -131,6 +345,11 @@ pub fn Chat() -> impl IntoView {
                 message: new_message.get(),
                 timestamp: "now".to_string(),
                 message_type: MessageType::User,
+                priority: MessagePriority::Normal,
+                ai_sentiment: 0.75,
+                attachments: vec![],
+                read_by: vec![],
+                reactions: vec![],
             };
             set_messages.update(|msgs| msgs.push(message));
             set_new_message.set(String::new());
@@ -145,6 +364,16 @@ pub fn Chat() -> impl IntoView {
                 description: new_room_description.get(),
                 member_count: 1,
                 is_active: true,
+                room_type: RoomType::ProjectTeam,
+                ai_moderation: true,
+                encryption_level: EncryptionLevel::Enterprise,
+                productivity_score: 85.0,
+                collaboration_metrics: CollaborationMetrics {
+                    messages_per_hour: 12.0,
+                    response_rate: 90.0,
+                    engagement_score: 85.0,
+                    decision_velocity: 80.0,
+                },
             };
             set_chat_rooms.update(|rooms| rooms.push(room));
             set_new_room_name.set(String::new());
@@ -157,6 +386,26 @@ pub fn Chat() -> impl IntoView {
         MessageType::User => "bg-slate-700/50",
         MessageType::System => "bg-blue-600/20 border-l-4 border-blue-500",
         MessageType::Alert => "bg-red-600/20 border-l-4 border-red-500",
+        MessageType::AIAssistant => "bg-gradient-to-r from-purple-900/30 to-blue-900/30 border-l-4 border-purple-500",
+        MessageType::ExecutiveUpdate => "bg-gradient-to-r from-yellow-900/30 to-orange-900/30 border-l-4 border-yellow-500",
+        MessageType::CriticalAlert => "bg-gradient-to-r from-red-900/40 to-pink-900/40 border-l-4 border-red-400 animate-pulse",
+    };
+
+    let priority_indicator = |priority: &MessagePriority| match priority {
+        MessagePriority::Low => "🔵",
+        MessagePriority::Normal => "⚪",
+        MessagePriority::High => "🟡",
+        MessagePriority::Critical => "🔴",
+        MessagePriority::Presidential => "👑",
+    };
+
+    let room_type_icon = |room_type: &RoomType| match room_type {
+        RoomType::General => "💬",
+        RoomType::Executive => "🏢",
+        RoomType::ProjectTeam => "👥",
+        RoomType::Emergency => "🚨",
+        RoomType::AIAnalysis => "🤖",
+        RoomType::ProductionFloor => "🏭",
     };
 
     let current_room_name = move || {

@@ -1,6 +1,7 @@
 pub mod home;
 pub mod not_found;
 pub mod dashboard;
+pub mod dashboard_components;
 pub mod nc_program_management;
 pub mod chat;
 pub mod tool_management;

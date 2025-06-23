@@ -38,13 +38,13 @@ wasm-pack test --headless --firefox  # Run WASM tests in browser
 ```bash
 npm run build-css
 ```
-Builds TailwindCSS with watch mode to `dist/tailwind.css`
+Builds TailwindCSS with watch mode to `.dist/tailwind.css`
 
 ### CSS Build (Production)
 ```bash
 npm run build-css-prod
 ```
-Builds minified TailwindCSS for production to `dist/tailwind.css`
+Builds minified TailwindCSS for production to `.dist/tailwind.css`
 
 ### Code Quality
 ```bash
@@ -53,18 +53,32 @@ cargo clippy                  # Run linter
 cargo check                   # Check compilation without building
 ```
 
+### GitHub Pages Deployment
+```bash
+# Production build for GitHub Pages
+npm run build-css-prod        # Build optimized CSS
+trunk build --release --public-url /n-sup/  # Build with correct public URL
+```
+
+The project is configured for automatic deployment to GitHub Pages:
+- Pushes to `main` branch trigger automatic build and deployment
+- Pull requests trigger build validation only
+- Deployed at: https://dsk-code.github.io/n-sup/
+- GitHub Actions workflow: `.github/workflows/deploy.yml`
+
 ## Architecture
 
 ### Project Structure
 - `src/lib.rs`: Main app component with router setup and all route definitions
 - `src/main.rs`: Entry point that mounts the app to DOM
-- `src/pages/`: Page components for each route (8 total pages)
+- `src/pages/`: Page components for each route (9 total pages including dashboard)
 - `src/components/`: Reusable UI components for landing page and shared elements
 - `src/utils/`: Utility modules for animations and event handlers
 - `index.html`: HTML template that Trunk uses for bundling
 - `Trunk.toml`: Trunk configuration for build and serve settings
 - `input.css`: TailwindCSS source file
 - `tailwind.config.js`: TailwindCSS configuration
+- `public/404.html`: SPA routing fallback for GitHub Pages direct URL access
 
 ### Component Architecture
 The application uses Leptos's component system with:
@@ -75,18 +89,22 @@ The application uses Leptos's component system with:
 
 ### Router Configuration  
 The app uses leptos_router with the following routes configured in `src/lib.rs`:
-- `/` - Home landing page
-- `/tools` - Tool management system
-- `/employees` - Employee management system  
-- `/nc-programs` - NC program management
-- `/nc-support` - AI-powered NC program support
-- `/ai-suggestions` - AI tool optimization suggestions
-- `/chat` - Team communication chat
+- `/n-sup/` - Home landing page
+- `/n-sup/dashboard` - Main dashboard interface
+- `/n-sup/tools` - Tool management system
+- `/n-sup/employees` - Employee management system  
+- `/n-sup/nc-programs` - NC program management
+- `/n-sup/nc-support` - AI-powered NC program support
+- `/n-sup/ai-suggestions` - AI tool optimization suggestions
+- `/n-sup/chat` - Team communication chat
 - Fallback: 404 NotFound component
+
+**Note**: All routes include the `/n-sup/` prefix for GitHub Pages deployment compatibility.
 
 ### Page Architecture
 This is a multi-page application with the following main pages:
 - `src/pages/home.rs`: Landing page with N-Sup platform overview
+- `src/pages/dashboard.rs`: Main dashboard interface with dashboard_components.rs support
 - `src/pages/tool_management.rs`: Tool inventory and management interface
 - `src/pages/employee_management.rs`: Employee database and status management
 - `src/pages/nc_program_management.rs`: NC program version control and status tracking
@@ -114,7 +132,7 @@ Components are organized into reusable modules:
 
 ## Setup Requirements
 
-This project uses Rust stable toolchain and requires:
+This project uses Rust stable toolchain (configured in `rust-toolchain.toml`) and requires:
 - `wasm32-unknown-unknown` target: `rustup target add wasm32-unknown-unknown`
 - Trunk: `cargo install trunk`
 - Node.js/npm for TailwindCSS
@@ -127,7 +145,7 @@ The project uses TailwindCSS for styling with a dark theme featuring:
 - Responsive design with mobile-first approach
 - Glass morphism effects with backdrop-blur
 
-CSS is processed from `input.css` and output to `dist/tailwind.css` via the npm scripts.
+CSS is processed from `input.css` and output to `.dist/tailwind.css` via the npm scripts.
 
 ## Module Organization
 
@@ -150,7 +168,7 @@ Components are organized for reusability:
 
 ## Leptos Development Patterns
 
-**IMPORTANT**: When writing Leptos code, always reference `LEPTOS.md` for comprehensive documentation and examples.
+**IMPORTANT**: When writing Leptos code, always reference `LEPTOS.md` for comprehensive documentation and examples specific to this project.
 
 ### Component Patterns
 ```rust
@@ -180,3 +198,18 @@ pub fn ComponentName() -> impl IntoView {
 ### Import Conventions
 - Use `leptos::prelude::*` for core functionality
 - Import specific modules as needed: `leptos_meta::*`, `leptos_router::*`
+
+## Key Configuration Files
+
+### Build Configuration
+- `Trunk.toml`: Trunk build configuration with GitHub Pages setup (`public_url = "/n-sup/"`)
+- `rust-toolchain.toml`: Rust stable toolchain specification
+- `tailwind.config.js`: TailwindCSS configuration
+- `package.json`: Node.js dependencies and CSS build scripts
+
+### Important Implementation Details
+- All routes use `/n-sup/` prefix for GitHub Pages subpath deployment
+- CSS output goes to `.dist/` directory (note the dot prefix)
+- The project includes a `public/404.html` file for SPA routing fallback on GitHub Pages
+- Dashboard has additional components in `dashboard_components.rs` for modular organization
+- All components are properly exported through `mod.rs` files for clean module structure

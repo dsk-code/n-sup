@@ -49,6 +49,36 @@ pub struct CodeTemplate {
     pub last_used: String,
 }
 
+#[derive(Clone, Debug)]
+pub struct AIAnalysisResult {
+    pub optimization_score: f32,
+    pub efficiency_gain: f32,
+    pub cost_reduction: u32,
+    pub quality_improvement: f32,
+    pub risk_assessment: String,
+    pub implementation_complexity: String,
+    pub estimated_time_savings: String,
+}
+
+#[derive(Clone, Debug)]
+pub struct PredictiveMaintenanceAlert {
+    pub machine_id: String,
+    pub component: String,
+    pub failure_probability: f32,
+    pub recommended_action: String,
+    pub urgency_level: UrgencyLevel,
+    pub estimated_cost_if_ignored: u32,
+    pub optimal_maintenance_window: String,
+}
+
+#[derive(Clone, Debug, PartialEq)]
+pub enum UrgencyLevel {
+    Low,
+    Medium,
+    High,
+    Critical,
+}
+
 #[component]
 pub fn NcProgramSupport() -> impl IntoView {
     let (optimizations, _set_optimizations) = signal(vec![
@@ -174,12 +204,57 @@ pub fn NcProgramSupport() -> impl IntoView {
         },
     ]);
 
+    let (ai_analysis_results, _set_ai_analysis_results) = signal(vec![
+        AIAnalysisResult {
+            optimization_score: 94.7,
+            efficiency_gain: 28.3,
+            cost_reduction: 1800000,
+            quality_improvement: 15.2,
+            risk_assessment: "低リスク - 既存プロセスとの高い互換性".to_string(),
+            implementation_complexity: "中程度 - 2週間の導入期間".to_string(),
+            estimated_time_savings: "年間420時間".to_string(),
+        },
+    ]);
+
+    let (predictive_maintenance_alerts, _set_predictive_maintenance_alerts) = signal(vec![
+        PredictiveMaintenanceAlert {
+            machine_id: "MC-003".to_string(),
+            component: "スピンドルベアリング".to_string(),
+            failure_probability: 87.3,
+            recommended_action: "2日以内にベアリング交換を実施".to_string(),
+            urgency_level: UrgencyLevel::High,
+            estimated_cost_if_ignored: 3200000,
+            optimal_maintenance_window: "木曜日 14:00-16:00".to_string(),
+        },
+        PredictiveMaintenanceAlert {
+            machine_id: "MC-007".to_string(),
+            component: "冷却システム".to_string(),
+            failure_probability: 62.1,
+            recommended_action: "来週中に冷却液交換とフィルター清掃".to_string(),
+            urgency_level: UrgencyLevel::Medium,
+            estimated_cost_if_ignored: 850000,
+            optimal_maintenance_window: "土曜日 09:00-11:00".to_string(),
+        },
+        PredictiveMaintenanceAlert {
+            machine_id: "MC-001".to_string(),
+            component: "制御基板".to_string(),
+            failure_probability: 95.8,
+            recommended_action: "即座に制御基板の交換が必要".to_string(),
+            urgency_level: UrgencyLevel::Critical,
+            estimated_cost_if_ignored: 8500000,
+            optimal_maintenance_window: "緊急対応 - 即座に実施".to_string(),
+        },
+    ]);
+
     let (active_tab, set_active_tab) = signal("optimizations");
     let (show_optimization_detail, set_show_optimization_detail) = signal(false);
     let (viewing_optimization, set_viewing_optimization) = signal(None::<NcOptimization>);
     let (show_template_detail, set_show_template_detail) = signal(false);
     let (viewing_template, set_viewing_template) = signal(None::<CodeTemplate>);
     let (show_code_generator, set_show_code_generator) = signal(false);
+    let (show_ai_analysis, set_show_ai_analysis) = signal(false);
+    let (show_predictive_maintenance, set_show_predictive_maintenance) = signal(false);
+    let (show_ai_insights, set_show_ai_insights) = signal(false);
 
     let view_optimization = move |optimization: NcOptimization| {
         set_viewing_optimization.set(Some(optimization));
@@ -245,19 +320,72 @@ pub fn NcProgramSupport() -> impl IntoView {
                 <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
                     <div>
                         <h1 class="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-2">
-                            "NCプログラム支援"
+                            "🤖 AI-Powered NCプログラム支援"
+                            <span class="text-sm bg-gradient-to-r from-gold-400 to-yellow-500 px-3 py-1 rounded-full text-black font-semibold ml-3">"PRESIDENTIAL AI"</span>
                         </h1>
                         <p class="text-slate-300 text-sm">
-                            "AIによるNCプログラムの最適化提案と自動コード生成"
+                            "次世代AI技術による予測分析、自動最適化、リアルタイム異常検知"
                         </p>
                     </div>
-                    <button 
-                        class="w-full sm:w-auto bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 px-4 sm:px-6 py-3 rounded-lg font-semibold transition-all duration-300 transform hover:scale-105 text-sm sm:text-base"
-                        on:click=move |_| set_show_code_generator.set(true)
-                    >
-                        <span class="sm:hidden">"コード生成"</span>
-                        <span class="hidden sm:inline">"AIコード生成"</span>
-                    </button>
+                    <div class="flex gap-2">
+                        <button 
+                            class="bg-gradient-to-r from-red-500 to-orange-600 hover:from-red-600 hover:to-orange-700 px-4 py-2 rounded-lg font-semibold transition-all duration-300 text-sm"
+                            on:click=move |_| set_show_predictive_maintenance.set(true)
+                        >
+                            "🚨 予測保全"
+                        </button>
+                        <button 
+                            class="bg-gradient-to-r from-purple-500 to-pink-600 hover:from-purple-600 hover:to-pink-700 px-4 py-2 rounded-lg font-semibold transition-all duration-300 text-sm"
+                            on:click=move |_| set_show_ai_analysis.set(true)
+                        >
+                            "🧠 AI分析"
+                        </button>
+                        <button 
+                            class="bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 px-4 py-2 rounded-lg font-semibold transition-all duration-300 text-sm"
+                            on:click=move |_| set_show_code_generator.set(true)
+                        >
+                            "⚡ コード生成"
+                        </button>
+                    </div>
+                </div>
+
+                // Presidential AI Dashboard Overview
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-gradient-to-br from-green-800/50 to-emerald-900/50 backdrop-blur-lg rounded-xl p-6 border border-green-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-3xl">"💰"</div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-green-400">"¥18.5M"</div>
+                                <div class="text-xs text-green-300">"今月の削減効果"</div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mb-2">"AI最適化効果"</h3>
+                        <p class="text-sm text-green-200">"機械学習による自動最適化で大幅なコスト削減を実現"</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-purple-800/50 to-pink-900/50 backdrop-blur-lg rounded-xl p-6 border border-purple-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-3xl">"🎯"</div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-purple-400">"94.7%"</div>
+                                <div class="text-xs text-purple-300">"AI予測精度"</div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mb-2">"予測分析精度"</h3>
+                        <p class="text-sm text-purple-200">"深層学習モデルによる高精度な故障予測"</p>
+                    </div>
+                    
+                    <div class="bg-gradient-to-br from-blue-800/50 to-cyan-900/50 backdrop-blur-lg rounded-xl p-6 border border-blue-500/30">
+                        <div class="flex items-center justify-between mb-4">
+                            <div class="text-3xl">"⚡"</div>
+                            <div class="text-right">
+                                <div class="text-2xl font-bold text-blue-400">"28.3%"</div>
+                                <div class="text-xs text-blue-300">"効率向上率"</div>
+                            </div>
+                        </div>
+                        <h3 class="text-lg font-semibold text-white mb-2">"生産性向上"</h3>
+                        <p class="text-sm text-blue-200">"リアルタイム最適化による生産効率の大幅改善"</p>
+                    </div>
                 </div>
 
                 // Tab Navigation
@@ -269,7 +397,7 @@ pub fn NcProgramSupport() -> impl IntoView {
                             )}
                             on:click=move |_| set_active_tab.set("optimizations")
                         >
-                            "最適化提案"
+                            "🚀 最適化提案"
                         </button>
                         <button 
                             class={move || format!("px-4 py-2 rounded-md font-medium transition-colors duration-200 {}",
@@ -277,7 +405,7 @@ pub fn NcProgramSupport() -> impl IntoView {
                             )}
                             on:click=move |_| set_active_tab.set("templates")
                         >
-                            "コードテンプレート"
+                            "📝 コードテンプレート"
                         </button>
                     </div>
                 </div>
@@ -703,12 +831,191 @@ pub fn NcProgramSupport() -> impl IntoView {
                 </div>
             </Show>
 
+            // AI Analysis Modal
+            <Show when=move || show_ai_analysis.get()>
+                <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+                    <div class="bg-slate-800 rounded-xl p-6 w-full max-w-6xl mx-4 border border-slate-700 max-h-[90vh] overflow-y-auto">
+                        <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                            "🧠 AI分析結果ダッシュボード"
+                            <span class="text-sm bg-gradient-to-r from-gold-400 to-yellow-500 px-3 py-1 rounded-full text-black font-semibold ml-3">"PRESIDENTIAL AI"</span>
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+                            <For
+                                each=move || ai_analysis_results.get()
+                                key=|result| result.optimization_score as u32
+                                children=move |result| {
+                                    view! {
+                                        <div class="bg-gradient-to-br from-purple-900/30 to-pink-900/30 backdrop-blur-lg rounded-xl p-6 border border-purple-500/30">
+                                            <div class="flex items-center justify-between mb-4">
+                                                <div class="text-3xl">"🎯"</div>
+                                                <div class="text-right">
+                                                    <div class="text-3xl font-bold text-purple-400">{format!("{:.1}", result.optimization_score)}</div>
+                                                    <div class="text-xs text-purple-300">"最適化スコア"</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="grid grid-cols-2 gap-4 mb-4">
+                                                <div class="text-center">
+                                                    <div class="text-2xl font-bold text-green-400">{format!("{:.1}%", result.efficiency_gain)}</div>
+                                                    <div class="text-xs text-slate-400">"効率向上"</div>
+                                                </div>
+                                                <div class="text-center">
+                                                    <div class="text-2xl font-bold text-cyan-400">"¥"{format!("{:.1}M", result.cost_reduction as f32 / 1000000.0)}</div>
+                                                    <div class="text-xs text-slate-400">"コスト削減"</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-4">
+                                                <div class="text-sm text-slate-300 mb-2">"品質改善: " <span class="text-yellow-400 font-semibold">{format!("{:.1}%", result.quality_improvement)}</span></div>
+                                                <div class="w-full bg-slate-700 rounded-full h-2">
+                                                    <div 
+                                                        class="bg-gradient-to-r from-purple-500 to-pink-400 h-2 rounded-full"
+                                                        style=format!("width: {}%", result.quality_improvement * 5.0)
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="space-y-2 text-sm">
+                                                <div>
+                                                    <span class="text-slate-400">"リスク評価: "</span>
+                                                    <span class="text-green-300">{result.risk_assessment.clone()}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="text-slate-400">"導入複雑度: "</span>
+                                                    <span class="text-white">{result.implementation_complexity.clone()}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="text-slate-400">"時間節約: "</span>
+                                                    <span class="text-blue-300">{result.estimated_time_savings.clone()}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            />
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button class="bg-green-500 hover:bg-green-600 px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                                "分析結果をエクスポート"
+                            </button>
+                            <button class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                                "詳細レポート生成"
+                            </button>
+                            <button 
+                                class="bg-slate-600 hover:bg-slate-500 px-4 py-2 rounded-lg font-medium transition-colors duration-200"
+                                on:click=move |_| set_show_ai_analysis.set(false)
+                            >
+                                "閉じる"
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </Show>
+
+            // Predictive Maintenance Modal
+            <Show when=move || show_predictive_maintenance.get()>
+                <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+                    <div class="bg-slate-800 rounded-xl p-6 w-full max-w-6xl mx-4 border border-slate-700 max-h-[90vh] overflow-y-auto">
+                        <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
+                            "🚨 予測保全アラートシステム"
+                            <span class="text-sm bg-gradient-to-r from-red-500 to-orange-500 px-3 py-1 rounded-full text-white font-semibold ml-3">"CRITICAL ALERTS"</span>
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+                            <For
+                                each=move || predictive_maintenance_alerts.get()
+                                key=|alert| alert.machine_id.clone()
+                                children=move |alert| {
+                                    let urgency_color = match alert.urgency_level {
+                                        UrgencyLevel::Critical => "from-red-800/80 to-red-900/80 border-red-500/50",
+                                        UrgencyLevel::High => "from-orange-800/80 to-orange-900/80 border-orange-500/50",
+                                        UrgencyLevel::Medium => "from-yellow-800/80 to-yellow-900/80 border-yellow-500/50",
+                                        UrgencyLevel::Low => "from-green-800/80 to-green-900/80 border-green-500/50",
+                                    };
+                                    let urgency_text = match alert.urgency_level {
+                                        UrgencyLevel::Critical => "🔴 緊急",
+                                        UrgencyLevel::High => "🟡 高優先度",
+                                        UrgencyLevel::Medium => "🟠 中優先度", 
+                                        UrgencyLevel::Low => "🟢 低優先度",
+                                    };
+                                    
+                                    view! {
+                                        <div class={format!("bg-gradient-to-br {} backdrop-blur-lg rounded-xl p-6 border", urgency_color)}>
+                                            <div class="flex items-center justify-between mb-4">
+                                                <div class="text-2xl font-bold text-white">{alert.machine_id.clone()}</div>
+                                                <div class="text-right">
+                                                    <div class="text-lg font-bold text-red-400">{format!("{:.1}%", alert.failure_probability)}</div>
+                                                    <div class="text-xs text-slate-300">"故障確率"</div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="mb-4">
+                                                <div class="text-sm text-slate-300 mb-2">"対象部品: " <span class="text-white font-semibold">{alert.component.clone()}</span></div>
+                                                <div class="w-full bg-slate-700 rounded-full h-3">
+                                                    <div 
+                                                        class="bg-gradient-to-r from-red-500 to-orange-400 h-3 rounded-full"
+                                                        style=format!("width: {}%", alert.failure_probability)
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                            
+                                            <div class="space-y-3 text-sm mb-4">
+                                                <div>
+                                                    <span class="text-slate-400">"優先度: "</span>
+                                                    <span class="font-semibold">{urgency_text}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="text-slate-400">"推奨対応: "</span>
+                                                    <span class="text-white">{alert.recommended_action.clone()}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="text-slate-400">"放置時コスト: "</span>
+                                                    <span class="text-red-300 font-semibold">"¥"{format!("{:.1}M", alert.estimated_cost_if_ignored as f32 / 1000000.0)}</span>
+                                                </div>
+                                                <div>
+                                                    <span class="text-slate-400">"最適メンテ時間: "</span>
+                                                    <span class="text-green-300">{alert.optimal_maintenance_window.clone()}</span>
+                                                </div>
+                                            </div>
+                                            
+                                            <button class="w-full bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 py-2 rounded-lg font-medium transition-all duration-300">
+                                                "メンテナンス予約"
+                                            </button>
+                                        </div>
+                                    }
+                                }
+                            />
+                        </div>
+                        
+                        <div class="flex gap-3">
+                            <button class="bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                                "緊急対応チーム通知"
+                            </button>
+                            <button class="bg-orange-500 hover:bg-orange-600 px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                                "保全計画更新"
+                            </button>
+                            <button class="bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-lg font-medium transition-colors duration-200">
+                                "詳細分析レポート"
+                            </button>
+                            <button 
+                                class="bg-slate-600 hover:bg-slate-500 px-4 py-2 rounded-lg font-medium transition-colors duration-200"
+                                on:click=move |_| set_show_predictive_maintenance.set(false)
+                            >
+                                "閉じる"
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </Show>
+
             // AI Code Generator Modal
             <Show when=move || show_code_generator.get()>
                 <div class="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
                     <div class="bg-slate-800 rounded-xl p-6 w-full max-w-2xl mx-4 border border-slate-700 max-h-[90vh] overflow-y-auto">
                         <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-green-400 to-blue-400 bg-clip-text text-transparent">
-                            "AIコード生成"
+                            "⚡ AIコード生成"
                         </h2>
                         
                         <div class="space-y-4 mb-6">
@@ -745,7 +1052,7 @@ pub fn NcProgramSupport() -> impl IntoView {
                         
                         <div class="flex gap-3">
                             <button class="flex-1 bg-gradient-to-r from-green-500 to-blue-600 hover:from-green-600 hover:to-blue-700 py-2 rounded-lg font-medium transition-all duration-300">
-                                "コード生成"
+                                "⚡ コード生成"
                             </button>
                             <button 
                                 class="bg-slate-600 hover:bg-slate-500 px-4 py-2 rounded-lg font-medium transition-colors duration-200"
